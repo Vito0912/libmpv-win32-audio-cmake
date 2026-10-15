@@ -21,7 +21,7 @@ ExternalProject_Add(ffmpeg
         libvpl
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
-    GIT_TAG ea3d24bbe3c58b171e55fe2151fc7ffaca3ab3d2
+    GIT_TAG n9.0.2
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} LTO=0 CONF=1 <SOURCE_DIR>/configure
         --cross-prefix=${TARGET_ARCH}-
@@ -50,7 +50,6 @@ ExternalProject_Add(ffmpeg
         --disable-protocols
         --disable-filters
         --disable-doc
-        --disable-postproc
         --disable-programs
         --disable-gray
         --disable-swscale-alpha

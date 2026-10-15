@@ -1,6 +1,7 @@
 ExternalProject_Add(mpv
     DEPENDS
         ffmpeg
+        libplacebo
         fribidi
         lcms2
         libarchive
@@ -11,8 +12,8 @@ ExternalProject_Add(mpv
         openal-soft
     GIT_REPOSITORY https://github.com/mpv-player/mpv.git
     SOURCE_DIR ${SOURCE_LOCATION}
-    GIT_TAG v0.35.1
-    PATCH_COMMAND ${EXEC} git apply ${CMAKE_CURRENT_SOURCE_DIR}/mpv-*.patch
+    GIT_TAG v0.41.0
+    PATCH_COMMAND ""
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ${EXEC} LTO=0 CONF=1 meson setup <BINARY_DIR> <SOURCE_DIR>
         --prefix=${MINGW_INSTALL_PREFIX}
@@ -28,8 +29,9 @@ ExternalProject_Add(mpv
         -Dlibmpv=true
         -Dpdf-build=enabled
         -Dlua=disabled
-        -Dlibplacebo=disabled
         -Dvulkan=disabled
+        -Dd3d11=disabled
+        -Ddirect3d=disabled
         -Djavascript=disabled
         -Dlibarchive=enabled
         -Dlcms2=enabled
