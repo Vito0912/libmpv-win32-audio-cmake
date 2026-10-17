@@ -100,6 +100,9 @@ jobs:
       - name: Configuring CMake & Downloading source
         run: |
           cmake -DTARGET_ARCH=${{ env.arch }}-w64-mingw32 -DCOMPILER_TOOLCHAIN=clang ${{ env.x86_64_v3_ARCH }} -DCMAKE_INSTALL_PREFIX=$PWD/clang_root -DMINGW_INSTALL_PREFIX=$PWD/build_$BIT/$BIT-w64-mingw32 -DSINGLE_SOURCE_LOCATION=$PWD/src_packages -DRUSTUP_LOCATION=$PWD/clang_root/install_rustup -DENABLE_CCACHE=ON -DCLANG_PACKAGES_LTO=ON -G Ninja --fresh -B build_$BIT -S $PWD
+          if [[ ! -f "build_$BIT/$BIT-w64-mingw32/lib/libkernel32.a" ]]; then
+            ninja -C build_$BIT llvm-clang
+          fi
           ninja -C build_$BIT download || true
 
       - name: Building mpv
@@ -194,10 +197,6 @@ jobs:
           cache_key=${CACHE_ID##*-}
           curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-clang_root-$cache_key"
           curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-repository-$cache_key"
-          curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-clang-i686_toolchain-$cache_key"
-          curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-clang-x86_64_toolchain-$cache_key"
-          curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-clang-x86_64_v3_toolchain-$cache_key"
-          curl -u "$GITHUB_ACTOR:$GH_TOKEN" $CURL_RETRIES -s -o /dev/null -X DELETE -H "Accept: application/vnd.github.v3+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/caches?key=$PREFIX-clang-aarch64_toolchain-$cache_key"
 
   release:
     name: Upload releases
