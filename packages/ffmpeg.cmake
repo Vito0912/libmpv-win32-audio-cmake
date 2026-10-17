@@ -10,7 +10,6 @@ ExternalProject_Add(ffmpeg
         libpng
         libsoxr
         libwebp
-        libzimg
         libmysofa
         harfbuzz
         opus
@@ -67,6 +66,7 @@ ExternalProject_Add(ffmpeg
         --disable-vdpau
         --disable-bzlib
         --disable-libvpl
+        --disable-libzimg
         --disable-libuavs3d
         --disable-ffnvcodec
         --disable-linux-perf
