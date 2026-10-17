@@ -5,6 +5,7 @@ ExternalProject_Add(libplacebo
         glad
         fast_float
         xxhash
+        vulkan-header
     GIT_REPOSITORY https://github.com/haasn/libplacebo.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_TAG v7.351.0
