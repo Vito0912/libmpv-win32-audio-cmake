@@ -18,7 +18,6 @@ ExternalProject_Add(ffmpeg
         vorbis
         libjxl
         libxml2
-        libvpl
     GIT_REPOSITORY https://github.com/FFmpeg/FFmpeg.git
     SOURCE_DIR ${SOURCE_LOCATION}
     GIT_TAG n9.0.2
@@ -67,7 +66,7 @@ ExternalProject_Add(ffmpeg
         --disable-vaapi
         --disable-vdpau
         --disable-bzlib
-        --disable-libmfx
+        --disable-libvpl
         --disable-libuavs3d
         --disable-ffnvcodec
         --disable-linux-perf
